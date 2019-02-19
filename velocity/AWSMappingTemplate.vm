@@ -1,0 +1,25 @@
+#*
+    These blocks of code are intended for intercepting a request to an API Gateway so to
+    manipulate the posted request body info and apply context-relative manipulations on data
+    before passing it to the next resource
+*#
+
+##  Single field grabbing template
+
+#set ($messageObj = $util.parseJson($input.body))
+#if ($messageObj.get(0) == "")
+#set ($messagegpid = "$messageObj.Data.CNPJ_CPF$messageObj.Data.NumeroProposta")
+#else
+#set ($messagegpid = "$messageObj.get(0).Data.CNPJ_CPF$messageObj.get(0).Data.NumeroProposta")
+#end##
+Action=SendMessage&QueueUrl=$util.urlEncode('https://insert-your-sqs-address-here')&MessageBody=$util.urlEncode($input.body)&MessageGroupId=$messagegpid
+
+## Two field grabbing template
+
+#set ($messageObj = $util.parseJson($input.body))
+#if ($messageObj.get(0) == "")
+#set ($messagegpid = $messageObj.Data.OS)
+#else
+#set ($messagegpid = $messageObj.get(0).Data.OS)
+#end##
+Action=SendMessage&QueueUrl=$util.urlEncode('https://insert-your-sqs-address-here')&MessageBody=$util.urlEncode($input.body)&MessageGroupId=$messagegpid
