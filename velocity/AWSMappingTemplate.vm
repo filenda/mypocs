@@ -1,5 +1,5 @@
 #*
-    These blocks of code are intended for intercepting a request to an API Gateway so to
+    These blocks of code are intended for intercepting a request to an API Gateway as to
     manipulate the posted request body info and apply context-relative tweaks on data
     before passing it to the next resource
 *#
